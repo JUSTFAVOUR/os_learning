@@ -66,6 +66,15 @@ print:
     mov ah, 0x0e                        ; print character to TTY
 
 
+char:
+    ; subroutine for individual character
+    mov al, [si]                        ; get current char from position pointer
+    add si, 1                           ; inc si till we get null
+    or al, 0
+    je .return                          ; return if null
+    int 0x10                            ; print char if not done
+    jmp .char                           ; keep looping
+
 
 
 
