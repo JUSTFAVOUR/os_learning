@@ -76,6 +76,11 @@ char:
     jmp .char                           ; keep looping
 
 
+return:
+    popa
+    mov sp, bp
+    pop bp
+    ret
 
 
 
