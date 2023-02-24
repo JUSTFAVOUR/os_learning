@@ -1,4 +1,4 @@
-#include "../../Unity/src/unity.h"
+#include "../../Unity/src/unity.h" // uses testing src
 #include "addition.h"
 
 void setUp(void) {}
