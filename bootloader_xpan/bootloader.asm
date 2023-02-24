@@ -1,4 +1,7 @@
 
+bits 16
+
+
 ; first we move the address to the data segment
 ; note can't move directly to the segmented memory
 mov ax, 0x7C0
@@ -13,6 +16,20 @@ mov ss, ax                              ; stack segment at 0x7E0
 ; to get a stack size 8k, we use 0x2000 from the 64k memory segment
 mov sp, 0x2000                          ; moved 8k size to stack pointer
 
+
+; here we call clearscreen, movecursor
+call clearscreen
+
+push 0x0000
+call movecursor
+add sp, 2
+
+push msg
+call print
+add sp, 2
+
+cli
+hlt
 
 clearscreen:
     push bp
@@ -85,3 +102,7 @@ return:
 
 
 msg:    db "Hello world, xpan's bootloader is crappy but works, lol!", 0
+
+; the 512 bytes of the bootsector, ends with 0xAA55 .i.e the boot signature
+times 510-(\$-$$) db 0
+dw 0xAA55
