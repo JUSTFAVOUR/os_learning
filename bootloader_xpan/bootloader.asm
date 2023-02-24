@@ -32,3 +32,26 @@ clearscreen:
     mov sp, bp
     pop bp
     ret
+
+
+movecursor:
+    push bp
+    mov bp, sp
+    pusha
+
+    ; so dx should have position where cursor should be (row, column)
+    ; offset dx by 4 cause it contains 2 bytes and arg takes 2bytes
+    ; AH be 0x02 BH be page number, we use 0
+    mov dx, [bp+4]                      ; get arg from stack, todo: dont understand this instruction well yet
+    mov ah, 0x02                        ; set cursor position
+    mov bh, 0x00                        ; page number 0 - not using multiple buffering
+    int 0x100                           ; well call video interrupt
+
+    popa
+    mov sp, bp
+    pop bp
+    ret
+
+
+
+
