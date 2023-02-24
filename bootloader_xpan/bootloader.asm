@@ -14,4 +14,21 @@ mov ss, ax                              ; stack segment at 0x7E0
 mov sp, 0x2000                          ; moved 8k size to stack pointer
 
 
+clearscreen:
+    push bp
+    mov bp, sp
+    pusha
 
+    mov ah, 0x07                        ; make bios scroll down window
+    mov al, 0x00                        ; clear entire window
+    mov bh, 0x07                        ; black bg - light grey text
+    mov cx, 0x00                        ; clear starting from top left (0,0)
+    mov dh, 0x18                        ; clear to 24th row down (0, 24)
+    mov dl, 0x4f                        ; clear to 79th column (79, 24)
+
+    int 0x10                            ; call video interrupt
+
+    popa
+    mov sp, bp
+    pop bp
+    ret
