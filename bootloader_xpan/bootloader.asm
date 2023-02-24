@@ -39,7 +39,7 @@ movecursor:
     mov bp, sp
     pusha
 
-    ; so dx should have position where cursor should be (row, column)
+    ; so dx should have position where cursor should be (row, column) int0x10 ah:02h
     ; offset dx by 4 cause it contains 2 bytes and arg takes 2bytes
     ; AH be 0x02 BH be page number, we use 0
     mov dx, [bp+4]                      ; get arg from stack, todo: dont understand this instruction well yet
@@ -54,4 +54,20 @@ movecursor:
 
 
 
+print:
+    push bp
+    mov bp, sp
+    pusha
 
+    ; using int0x10 ah:0eh
+    mov si, [bp+4]                      ; get pointer to the data
+    mov bh, 0x00                        ; page number 0
+    mov bl, 0x00                        ; foreground color
+    mov ah, 0x0e                        ; print character to TTY
+
+
+
+
+
+
+msg:    db "Hello world, xpan's bootloader is crappy but works, lol!", 0
