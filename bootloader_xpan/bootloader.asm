@@ -62,7 +62,7 @@ movecursor:
     mov dx, [bp+4]                      ; get arg from stack, todo: dont understand this instruction well yet
     mov ah, 0x02                        ; set cursor position
     mov bh, 0x00                        ; page number 0 - not using multiple buffering
-    int 0x100                           ; well call video interrupt
+    int 0x10                           ; well call video interrupt
 
     popa
     mov sp, bp
@@ -100,8 +100,9 @@ char:
 
 
 
-msg:    db "Hello world, xpan's bootloader is crappy but works, lol!", 0
+msg:    db "Hello world, xpans bootloader is crappy but works, lol!", 0
 
 ; the 512 bytes of the bootsector, ends with 0xAA55 .i.e the boot signature
 times 510-($-$$) db 0
-dw 0xAA55
+; magic number
+dw 0xaa55
